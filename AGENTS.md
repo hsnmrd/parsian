@@ -17,3 +17,11 @@ This block is written and re-added by `next dev` — verify at `node_modules/nex
 - Add reusable variants to `src/components/ui` only when they remain generic and useful across routes.
 - Add or update shadcn components through the shadcn CLI and review generated changes before using them.
 - Import UI components through the configured alias, such as `@/components/ui/button`.
+
+## Data Fetching & API conventions
+
+- Use `@tanstack/react-query` and `micro-rq` for all server data fetching, caching, and server state management.
+- Define API clients and REST resources once using `createMicroApi` and `api.resource`.
+- Pass generated query and mutation configs directly to TanStack Query (e.g. `useQuery({ ...resource.endpoint.toQuery(params) })`).
+- Do not create custom wrapper hooks or invent ad-hoc `fetch` calls around TanStack Query.
+- Refer to the `micro-rq` skill documentation in `.agents/skills/micro-rq` for resource and query patterns.
