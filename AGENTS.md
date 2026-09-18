@@ -25,3 +25,9 @@ This block is written and re-added by `next dev` — verify at `node_modules/nex
 - Pass generated query and mutation configs directly to TanStack Query (e.g. `useQuery({ ...resource.endpoint.toQuery(params) })`).
 - Do not create custom wrapper hooks or invent ad-hoc `fetch` calls around TanStack Query.
 - Refer to the `micro-rq` skill documentation in `.agents/skills/micro-rq` for resource and query patterns.
+
+## State Management & URL conventions
+
+- Use `nuqs` as the single source of truth for all URL search parameters and filter state.
+- Do not introduce external global client stores (such as Zustand or Redux); combine `nuqs` (URL state), `@tanstack/react-query` (server state), and React `useState` (transient UI state).
+- Use `zod` for all data schemas, runtime validation, and type inference.
