@@ -1,6 +1,6 @@
 "use client";
 
-import { useQuery } from "@tanstack/react-query";
+import { keepPreviousData, useQuery } from "@tanstack/react-query";
 import { useQueryStates } from "nuqs";
 import { transactionsApi } from "../_api/transactions-api";
 import { transactionSearchParamsParsers } from "../_params/transaction-search-params";
@@ -15,16 +15,19 @@ import {
   TableRow,
 } from "@/components/ui/table";
 import { Badge } from "@/components/ui/badge";
+import { cn } from "cn";
 import { TransactionTableSkeleton } from "./transaction-table-skeleton";
 import { TransactionTableError } from "./transaction-table-error";
 import { TransactionTableEmpty } from "./transaction-table-empty";
+import { TransactionPagination } from "./transaction-pagination";
 import type { Transaction } from "../_types/transaction";
 
 export function TransactionsView() {
   const [filters] = useQueryStates(transactionSearchParamsParsers);
 
-  const { data, isPending, isError, error, refetch } = useQuery({
+  const { data, isPending, isFetching, isError, error, refetch } = useQuery({
     ...transactionsApi.list.toQuery(filters),
+    placeholderData: keepPreviousData,
   });
 
   return (
@@ -45,7 +48,12 @@ export function TransactionsView() {
         )}
       </div>
 
-      <div className="bg-card rounded-lg border shadow-xs">
+      <div
+        className={cn(
+          "bg-card rounded-lg border shadow-xs transition-opacity duration-200",
+          isFetching && !isPending && "opacity-60"
+        )}
+      >
         <Table>
           <TableHeader>
             <TableRow className="hover:bg-transparent">
@@ -93,6 +101,13 @@ export function TransactionsView() {
           </TableBody>
         </Table>
       </div>
+
+      {data && data.pagination.totalCount > 0 && (
+        <TransactionPagination
+          totalPages={data.pagination.totalPages}
+          totalCount={data.pagination.totalCount}
+        />
+      )}
     </div>
   );
 }
