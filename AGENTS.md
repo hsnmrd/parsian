@@ -12,8 +12,8 @@ This block is written and re-added by `next dev` — verify at `node_modules/nex
 
 - Check `src/components/ui` before creating a new UI primitive.
 - Keep `src/components/ui` limited to shared, business-agnostic shadcn components.
-- Do not place transaction-specific state, data fetching, copy, or business logic in `src/components/ui`.
-- Place route-specific compositions in `src/app/_components/transactions`.
+- Place route-specific compositions in `src/app/transaction/_components`.
+- Transaction feature pages and layouts reside under `src/app/transaction`.
 - Add reusable variants to `src/components/ui` only when they remain generic and useful across routes.
 - Add or update shadcn components through the shadcn CLI and review generated changes before using them.
 - Import UI components through the configured alias, such as `@/components/ui/button`.
