@@ -26,6 +26,13 @@ This block is written and re-added by `next dev` — verify at `node_modules/nex
 - Add or update shadcn components through the shadcn CLI and review generated changes before using them.
 - Import UI components through the configured alias, such as `@/components/ui/button`.
 
+## Component organization
+
+- Keep React components focused on declarative rendering, composition, event wiring, and local UI state.
+- Move non-trivial pure logic—such as formatting, data transformation, pagination or range generation, query-parameter normalization, reusable mappings, and shared constants—out of component files.
+- Place transaction-specific helpers in `src/app/transaction/_utils`, application-wide helpers in `src/lib`, and reusable React hooks in `src/hooks`.
+- Keep a trivial expression next to the JSX when extracting it would make the code harder to follow. Prefer extraction when logic contains branches or loops, represents a reusable rule, or can be tested independently from React.
+
 ## Data Fetching & API conventions
 
 - Use `@tanstack/react-query` and `micro-rq` for HTTP server state consumed by Server and Client Components.
