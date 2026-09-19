@@ -8,6 +8,14 @@ This block is written and re-added by `next dev` — verify at `node_modules/nex
 
 <!-- END:nextjs-agent-rules -->
 
+## Project context
+
+- This is a Persian RTL transaction-report take-home project.
+- The main application route is `/transaction`.
+- Match the desktop reference at `docs/design/transaction-desktop-1440.png`.
+- Match the mobile reference at `docs/design/transaction-mobile-390.png`.
+- Use a transaction table on desktop and transaction cards on mobile.
+
 ## UI component boundaries
 
 - Check `src/components/ui` before creating a new UI primitive.
@@ -20,7 +28,7 @@ This block is written and re-added by `next dev` — verify at `node_modules/nex
 
 ## Data Fetching & API conventions
 
-- Use `@tanstack/react-query` and `micro-rq` for all server data fetching, caching, and server state management.
+- Use `@tanstack/react-query` and `micro-rq` for HTTP server state consumed by Server and Client Components.
 - Define API clients and REST resources once using `createMicroApi` and `api.resource`.
 - Pass generated query and mutation configs directly to TanStack Query (e.g. `useQuery({ ...resource.endpoint.toQuery(params) })`).
 - Server Components may prefetch data with `QueryClient` using the same generated `micro-rq` query config that Client Components pass to `useQuery`, then hydrate that cache through `HydrationBoundary`.
@@ -28,8 +36,45 @@ This block is written and re-added by `next dev` — verify at `node_modules/nex
 - Do not create custom wrapper hooks or invent ad-hoc `fetch` calls around TanStack Query.
 - Refer to the `micro-rq` skill documentation in `.agents/skills/micro-rq` for resource and query patterns.
 
+## Transaction behavior
+
+- Represent search, status, date range, page, and page size in the URL.
+- Reset `page` to `1` whenever search, status, date range, or page size changes.
+- Never send the complete transaction dataset to the browser for client-side filtering or pagination. Send filters and pagination to the Route Handler and return only the requested page plus pagination metadata such as `totalCount`.
+- Normalize or reject out-of-range page and page-size values consistently across URL parsing and the Route Handler.
+
+## Async states
+
+- Use one responsive transaction-results Skeleton for every loading transition; do not use Spinner or `keepPreviousData` for transaction-result loading.
+- Keep the stable page shell, including the title and filter controls, outside `Suspense`. Put the asynchronous prefetch and hydration subtree inside the boundary so the shell can stream immediately.
+- Reuse the same responsive Skeleton as the `Suspense` fallback for initial server loading and while Client Component queries are fetching after search, filter, pagination, or refresh changes.
+- Debounce search requests so the Skeleton does not flash for every keystroke.
+- Use Empty for no-result and blocking-error states, and provide a retry action for errors.
+- Use Sonner only for non-blocking feedback when usable data can remain visible, such as a failed manual refresh with cached data.
+- Preserve request cancellation through the `AbortSignal` forwarded by generated `micro-rq` query configs.
+- Older responses must never overwrite the latest search or filter result.
+
+## Responsive and accessibility
+
+- Verify `/transaction` at 390px and 1440px widths against the committed design references.
+- Use a table on desktop and cards on mobile.
+- Mobile interactive controls must have a touch target of at least 44px by 44px.
+- Icon-only buttons require an accessible Persian label.
+- Dialogs require a title, focus management, and keyboard-accessible close behavior.
+
 ## State Management & URL conventions
 
 - Use `nuqs` as the single source of truth for all URL search parameters and filter state.
 - Do not introduce external global client stores (such as Zustand or Redux); combine `nuqs` (URL state), `@tanstack/react-query` (server state), and React `useState` (transient UI state).
 - Use `zod` for all data schemas, runtime validation, and type inference.
+
+## Verification
+
+After relevant code changes, run:
+
+- `pnpm lint`
+- `pnpm exec tsc --noEmit`
+- `pnpm format:check`
+- `pnpm build`
+
+For UI changes, also verify `/transaction` at both 390px and 1440px widths. Do not consider the task complete while any required check fails.
