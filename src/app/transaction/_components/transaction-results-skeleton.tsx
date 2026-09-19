@@ -9,11 +9,11 @@ export function TransactionResultsSkeleton({ rowCount = 4 }: TransactionResultsS
     <section
       role="status"
       aria-live="polite"
-      className="md:bg-card flex flex-col gap-3 md:gap-0 md:overflow-hidden md:rounded-xl md:border md:shadow-xs"
+      className="lg:bg-card flex flex-col gap-3 lg:gap-0 lg:overflow-hidden lg:rounded-xl lg:border lg:shadow-xs"
     >
       <span className="sr-only">در حال دریافت تراکنش‌ها</span>
 
-      <div className="bg-card flex min-h-16 items-center justify-between rounded-lg border px-4 md:min-h-19 md:rounded-none md:border-x-0 md:border-t-0 md:px-5">
+      <div className="bg-card flex min-h-16 items-center justify-between rounded-lg border px-4 lg:min-h-19 lg:rounded-none lg:border-x-0 lg:border-t-0 lg:px-5">
         <div className="space-y-2">
           <Skeleton className="h-5 w-28" />
           <Skeleton className="h-3 w-44" />
@@ -25,7 +25,7 @@ export function TransactionResultsSkeleton({ rowCount = 4 }: TransactionResultsS
         <div
           key={index}
           aria-hidden="true"
-          className="bg-card grid min-h-36 grid-cols-2 items-center gap-x-4 gap-y-3 rounded-lg border p-4 md:min-h-14 md:grid-cols-[10%_19%_24%_19%_14%_14%] md:gap-0 md:rounded-none md:border-x-0 md:border-t-0 md:px-5 md:py-0"
+          className="bg-card grid min-h-36 grid-cols-2 items-center gap-x-4 gap-y-3 rounded-lg border p-4 lg:min-h-14 lg:grid-cols-[10%_19%_24%_19%_14%_14%] lg:gap-0 lg:rounded-none lg:border-x-0 lg:border-t-0 lg:px-5 lg:py-0"
         >
           <Skeleton className="h-4 w-12" />
           <Skeleton className="h-4 w-24" />
