@@ -1,6 +1,5 @@
 import type { Metadata } from "next";
 import localFont from "next/font/local";
-import { Geist_Mono } from "next/font/google";
 import "./globals.css";
 import { cn } from "@/lib/utils";
 import { QueryProvider } from "@/components/providers/query-provider";
@@ -39,11 +38,6 @@ const shabnam = localFont({
   display: "swap",
 });
 
-const geistMono = Geist_Mono({
-  variable: "--font-geist-mono",
-  subsets: ["latin"],
-});
-
 export const metadata: Metadata = {
   title: "سامانه گزارش تراکنش‌ها | Transactions Report",
   description: "سامانه گزارش و فیلتر تراکنش‌های مالی",
@@ -58,7 +52,7 @@ export default function RootLayout({
     <html
       lang="fa"
       dir="rtl"
-      className={cn("h-full", "antialiased", shabnam.variable, geistMono.variable, "font-sans")}
+      className={cn("h-full", "antialiased", shabnam.variable, "font-sans")}
     >
       <body className="flex min-h-full flex-col font-sans">
         <NuqsAdapter>
