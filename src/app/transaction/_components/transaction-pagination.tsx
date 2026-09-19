@@ -11,18 +11,9 @@ import {
   PaginationNext,
   PaginationPrevious,
 } from "@/components/ui/pagination";
-import {
-  Select,
-  SelectContent,
-  SelectGroup,
-  SelectItem,
-  SelectTrigger,
-  SelectValue,
-} from "@/components/ui/select";
 
 interface TransactionPaginationProps {
   totalPages: number;
-  totalCount: number;
 }
 
 function getPaginationPages(currentPage: number, totalPages: number): (number | "ellipsis")[] {
@@ -49,8 +40,8 @@ function getPaginationPages(currentPage: number, totalPages: number): (number | 
   return [1, "ellipsis", currentPage - 1, currentPage, currentPage + 1, "ellipsis", totalPages];
 }
 
-export function TransactionPagination({ totalPages, totalCount }: TransactionPaginationProps) {
-  const [{ page, pageSize }, setFilters] = useQueryStates(transactionSearchParamsParsers);
+export function TransactionPagination({ totalPages }: TransactionPaginationProps) {
+  const [{ page }, setFilters] = useQueryStates(transactionSearchParamsParsers);
 
   const currentPage = Math.min(Math.max(1, page), Math.max(1, totalPages));
 
@@ -59,60 +50,25 @@ export function TransactionPagination({ totalPages, totalCount }: TransactionPag
     setFilters({ page: newPage });
   };
 
-  const handlePageSizeChange = (newSize: string | null) => {
-    if (!newSize) return;
-    const parsed = Number.parseInt(newSize, 10);
-    if (!Number.isNaN(parsed) && parsed > 0) {
-      setFilters({ pageSize: parsed, page: 1 });
-    }
-  };
-
   const pages = getPaginationPages(currentPage, totalPages);
 
-  const startRecord = totalCount === 0 ? 0 : (currentPage - 1) * pageSize + 1;
-  const endRecord = Math.min(currentPage * pageSize, totalCount);
-
   return (
-    <div className="flex flex-col items-center justify-between gap-4 py-2 sm:flex-row" dir="rtl">
-      <div className="text-muted-foreground flex flex-wrap items-center gap-3 text-xs">
-        <span>
-          نمایش{" "}
-          <strong className="text-foreground font-semibold">
-            {startRecord.toLocaleString("fa-IR")}
-          </strong>{" "}
-          تا{" "}
-          <strong className="text-foreground font-semibold">
-            {endRecord.toLocaleString("fa-IR")}
-          </strong>{" "}
-          از{" "}
-          <strong className="text-foreground font-semibold">
-            {totalCount.toLocaleString("fa-IR")}
-          </strong>{" "}
-          تراکنش
-        </span>
-
-        <div className="flex items-center gap-1.5 border-s ps-3">
-          <span>تعداد در صفحه:</span>
-          <Select value={String(pageSize)} onValueChange={handlePageSizeChange}>
-            <SelectTrigger size="sm" className="h-8 w-16">
-              <SelectValue />
-            </SelectTrigger>
-            <SelectContent>
-              <SelectGroup>
-                <SelectItem value="10">۱۰</SelectItem>
-                <SelectItem value="20">۲۰</SelectItem>
-                <SelectItem value="50">۵۰</SelectItem>
-              </SelectGroup>
-            </SelectContent>
-          </Select>
-        </div>
+    <div
+      className="flex min-h-17 flex-col items-center justify-between gap-4 border-t px-5 py-4 sm:flex-row"
+      dir="rtl"
+    >
+      <div className="text-muted-foreground text-xs">
+        صفحه {currentPage.toLocaleString("fa-IR")} از {totalPages.toLocaleString("fa-IR")}
       </div>
 
-      <Pagination className="mx-0 w-auto justify-end">
+      <Pagination className="mx-0 w-auto justify-end" aria-label="صفحه‌بندی تراکنش‌ها">
         <PaginationContent>
           <PaginationItem>
             <PaginationPrevious
-              text="قبلی"
+              text=""
+              size="icon"
+              variant="outline"
+              aria-label="صفحه قبل"
               disabled={currentPage <= 1}
               onClick={(e) => {
                 e.preventDefault();
@@ -124,12 +80,14 @@ export function TransactionPagination({ totalPages, totalCount }: TransactionPag
           {pages.map((p, idx) =>
             p === "ellipsis" ? (
               <PaginationItem key={`ellipsis-${idx}`}>
-                <PaginationEllipsis />
+                <PaginationEllipsis className="size-9" />
               </PaginationItem>
             ) : (
               <PaginationItem key={p}>
                 <PaginationLink
                   isActive={p === currentPage}
+                  variant={p === currentPage ? "default" : "outline"}
+                  aria-label={`صفحه ${p.toLocaleString("fa-IR")}`}
                   onClick={(e) => {
                     e.preventDefault();
                     handlePageChange(p);
@@ -143,7 +101,10 @@ export function TransactionPagination({ totalPages, totalCount }: TransactionPag
 
           <PaginationItem>
             <PaginationNext
-              text="بعدی"
+              text=""
+              size="icon"
+              variant="outline"
+              aria-label="صفحه بعد"
               disabled={currentPage >= totalPages}
               onClick={(e) => {
                 e.preventDefault();
