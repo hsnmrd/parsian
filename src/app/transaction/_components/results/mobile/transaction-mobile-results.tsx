@@ -1,4 +1,4 @@
-import type { Transaction } from "../../_types/transaction";
+import type { Transaction } from "../../../_types/transaction";
 import { TransactionMobileCard } from "./transaction-mobile-card";
 import { TransactionMobileEmpty } from "./transaction-mobile-empty";
 import { TransactionMobileError } from "./transaction-mobile-error";

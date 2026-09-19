@@ -9,8 +9,8 @@ import {
   TableRow,
 } from "@/components/ui/table";
 import { formatCardNumber, formatDateTime } from "@/lib/formatters";
-import type { Transaction } from "../../_types/transaction";
-import { STATUS_CONFIG } from "../../_utils/status-config";
+import type { Transaction } from "../../../_types/transaction";
+import { STATUS_CONFIG } from "../../../_utils/status-config";
 import { TransactionDesktopEmpty } from "./transaction-desktop-empty";
 import { TransactionDesktopError } from "./transaction-desktop-error";
 import { TransactionPagination } from "../shared/transaction-pagination";

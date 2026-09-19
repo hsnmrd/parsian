@@ -1,8 +1,11 @@
 "use client";
 
 import { useQueryStates } from "nuqs";
-import { transactionSearchParamsParsers } from "../../_params/transaction-search-params";
-import { getDesktopPaginationPages, getMobilePaginationPages } from "../../_utils/pagination-pages";
+import { transactionSearchParamsParsers } from "../../../_params/transaction-search-params";
+import {
+  getDesktopPaginationPages,
+  getMobilePaginationPages,
+} from "../../../_utils/pagination-pages";
 import {
   Pagination,
   PaginationContent,

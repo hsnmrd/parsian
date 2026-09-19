@@ -8,13 +8,13 @@ import { useMediaQuery } from "@/hooks/use-media-query";
 import { transactionsApi } from "../_api/transactions-api";
 import { loadTransactionSearchParams } from "../_params/transaction-search-params";
 import { TransactionFilters } from "./filters/transaction-filters";
-import { TransactionResultsSkeleton } from "./shared/transaction-results-skeleton";
+import { TransactionResultsSkeleton } from "./results/shared/transaction-results-skeleton";
 
 const DESKTOP_MEDIA_QUERY = "(min-width: 1024px)";
 
 const TransactionDesktopResults = dynamic(
   () =>
-    import("./desktop/transaction-desktop-results").then(
+    import("./results/desktop/transaction-desktop-results").then(
       (module) => module.TransactionDesktopResults
     ),
   {
@@ -25,7 +25,9 @@ const TransactionDesktopResults = dynamic(
 
 const TransactionMobileResults = dynamic(
   () =>
-    import("./mobile/transaction-mobile-results").then((module) => module.TransactionMobileResults),
+    import("./results/mobile/transaction-mobile-results").then(
+      (module) => module.TransactionMobileResults
+    ),
   {
     ssr: false,
     loading: () => <TransactionResultsSkeleton />,
