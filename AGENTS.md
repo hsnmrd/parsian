@@ -78,3 +78,10 @@ After relevant code changes, run:
 - `pnpm build`
 
 For UI changes, also verify `/transaction` at both 390px and 1440px widths. Do not consider the task complete while any required check fails.
+
+## Code review
+
+- After every task that changes repository files, use the repository `$code-review` skill at `.agents/skills/code-review` to review the final task diff before declaring completion.
+- In completion-gate mode, resolve actionable findings within the authorized task scope, rerun affected verification, and review the resulting diff once more.
+- For standalone review or analysis requests, keep the review read-only unless the user explicitly asks for fixes.
+- State the review result, checks performed, and any residual risks in the final response.
