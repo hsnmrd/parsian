@@ -2,8 +2,8 @@
 
 import { useQueryStates } from "nuqs";
 import { Field, FieldLabel } from "@/components/ui/field";
-import { transactionSearchParamsParsers } from "../../_params/transaction-search-params";
-import type { TransactionStatusFilter as TransactionStatusFilterValue } from "../../_utils/transaction-filter-options";
+import { transactionSearchParamsParsers } from "../../../_params/transaction-search-params";
+import type { TransactionStatusFilter as TransactionStatusFilterValue } from "../../../_utils/transaction-filter-options";
 import { TransactionStatusSelect } from "./transaction-filter-status-select";
 
 export function TransactionStatusFilter() {

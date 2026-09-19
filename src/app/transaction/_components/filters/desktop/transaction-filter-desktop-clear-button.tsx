@@ -3,9 +3,9 @@
 import { RotateCcwIcon } from "lucide-react";
 import { useQueryStates } from "nuqs";
 import { Button } from "@/components/ui/button";
-import { transactionSearchParamsParsers } from "../../_params/transaction-search-params";
+import { transactionSearchParamsParsers } from "../../../_params/transaction-search-params";
 
-export function TransactionClearFiltersButton() {
+export function TransactionFilterDesktopClearButton() {
   const [filters, setFilters] = useQueryStates(transactionSearchParamsParsers);
   const hasFilters = Boolean(
     filters.search || filters.status !== "ALL" || filters.from || filters.to

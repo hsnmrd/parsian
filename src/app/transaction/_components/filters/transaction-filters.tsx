@@ -1,10 +1,10 @@
 import { FieldGroup } from "@/components/ui/field";
-import { TransactionClearFiltersButton } from "./transaction-filter-clear-button";
-import { TransactionDesktopDateFilter } from "./transaction-filter-desktop-date";
-import { TransactionFilterSummary } from "./transaction-filter-summary";
-import { TransactionMobileFilterDialog } from "./mobile-filter-dialog/transaction-filter-mobile-dialog";
-import { TransactionSearchFilter } from "./transaction-filter-search";
-import { TransactionStatusFilter } from "./transaction-filter-status";
+import { TransactionFilterDesktopClearButton } from "./desktop/transaction-filter-desktop-clear-button";
+import { TransactionFilterDesktopDateField } from "./desktop/transaction-filter-desktop-date-field";
+import { TransactionFilterMobileDialog } from "./mobile/transaction-filter-mobile-dialog";
+import { TransactionSearchFilter } from "./shared/transaction-filter-search";
+import { TransactionStatusFilter } from "./shared/transaction-filter-status";
+import { TransactionFilterSummary } from "./shared/transaction-filter-summary";
 
 interface TransactionFiltersProps {
   totalCount?: number;
@@ -22,9 +22,9 @@ export function TransactionFilters({ totalCount, visibleCount }: TransactionFilt
 
         <div className="grid grid-cols-[minmax(0,1fr)_3rem] gap-2 lg:contents">
           <TransactionStatusFilter />
-          <TransactionDesktopDateFilter />
-          <TransactionClearFiltersButton />
-          <TransactionMobileFilterDialog />
+          <TransactionFilterDesktopDateField />
+          <TransactionFilterDesktopClearButton />
+          <TransactionFilterMobileDialog />
         </div>
       </FieldGroup>
 

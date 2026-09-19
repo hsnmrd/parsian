@@ -18,7 +18,7 @@ import { TransactionFilterMobileHeader } from "./transaction-filter-mobile-heade
 import { TransactionFilterMobileStatusField } from "./transaction-filter-mobile-status-field";
 import { TransactionFilterMobileTrigger } from "./transaction-filter-mobile-trigger";
 
-export function TransactionMobileFilterDialog() {
+export function TransactionFilterMobileDialog() {
   const [filters, setFilters] = useQueryStates(transactionSearchParamsParsers);
   const [isOpen, setIsOpen] = useState(false);
   const [draftStatus, setDraftStatus] = useState<TransactionStatusFilter>(filters.status);

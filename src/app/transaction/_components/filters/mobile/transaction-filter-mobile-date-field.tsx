@@ -1,6 +1,6 @@
 import type { DateRange } from "react-day-picker";
 import { Field, FieldLabel } from "@/components/ui/field";
-import { TransactionFilterDatePicker } from "../transaction-filter-date-picker";
+import { TransactionFilterDatePicker } from "../shared/transaction-filter-date-picker";
 
 interface TransactionFilterMobileDateFieldProps {
   range?: DateRange;

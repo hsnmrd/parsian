@@ -1,6 +1,6 @@
 import { Field, FieldLabel } from "@/components/ui/field";
 import type { TransactionStatusFilter } from "../../../_utils/transaction-filter-options";
-import { TransactionStatusSelect } from "../transaction-filter-status-select";
+import { TransactionStatusSelect } from "../shared/transaction-filter-status-select";
 
 interface TransactionFilterMobileStatusFieldProps {
   value: TransactionStatusFilter;

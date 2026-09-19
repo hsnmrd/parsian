@@ -4,7 +4,7 @@ import { SearchIcon } from "lucide-react";
 import { debounce, useQueryStates } from "nuqs";
 import { Field, FieldLabel } from "@/components/ui/field";
 import { InputGroup, InputGroupAddon, InputGroupInput } from "@/components/ui/input-group";
-import { transactionSearchParamsParsers } from "../../_params/transaction-search-params";
+import { transactionSearchParamsParsers } from "../../../_params/transaction-search-params";
 
 const SEARCH_DEBOUNCE_MS = 450;
 

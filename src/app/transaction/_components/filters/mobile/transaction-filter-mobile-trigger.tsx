@@ -20,7 +20,7 @@ export function TransactionFilterMobileTrigger() {
       <FilterIcon aria-hidden="true" />
       <span
         aria-hidden="true"
-        className="bg-primary text-primary-foreground absolute -end-1 -top-1 flex size-5 items-center justify-center rounded-full text-[10px] tabular-nums"
+        className="bg-primary text-primary-foreground absolute -start-1 -top-1 flex size-5 items-center justify-center rounded-full text-[10px] tabular-nums"
       >
         {MOBILE_FILTER_FIELD_COUNT.toLocaleString("fa-IR")}
       </span>

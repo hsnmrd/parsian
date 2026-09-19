@@ -23,7 +23,7 @@ import { cn } from "cn";
 import {
   TRANSACTION_STATUS_FILTERS,
   type TransactionStatusFilter,
-} from "../../_utils/transaction-filter-options";
+} from "../../../_utils/transaction-filter-options";
 
 interface TransactionStatusSelectProps {
   ariaLabel: string;
