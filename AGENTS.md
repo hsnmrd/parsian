@@ -23,6 +23,8 @@ This block is written and re-added by `next dev` — verify at `node_modules/nex
 - Use `@tanstack/react-query` and `micro-rq` for all server data fetching, caching, and server state management.
 - Define API clients and REST resources once using `createMicroApi` and `api.resource`.
 - Pass generated query and mutation configs directly to TanStack Query (e.g. `useQuery({ ...resource.endpoint.toQuery(params) })`).
+- Server Components may prefetch data with `QueryClient` using the same generated `micro-rq` query config that Client Components pass to `useQuery`, then hydrate that cache through `HydrationBoundary`.
+- Do not use React Query inside Route Handlers. Route Handlers are responsible only for validating HTTP requests, accessing data, and constructing HTTP responses.
 - Do not create custom wrapper hooks or invent ad-hoc `fetch` calls around TanStack Query.
 - Refer to the `micro-rq` skill documentation in `.agents/skills/micro-rq` for resource and query patterns.
 

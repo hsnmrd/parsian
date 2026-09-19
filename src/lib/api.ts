@@ -1,11 +1,18 @@
 import { createMicroApi, MicroApiError } from "micro-rq";
 import { toast } from "sonner";
 
+const baseUrl = process.env.NEXT_PUBLIC_API_BASE_URL;
+
+if (!baseUrl) {
+  throw new Error("NEXT_PUBLIC_API_BASE_URL is required");
+}
+
 export const api = createMicroApi({
   name: "api",
-  baseUrl: "http://localhost:3000/api",
+  baseUrl,
   onError: (error) => {
     if (error instanceof DOMException && error.name === "AbortError") return;
+    if (typeof window === "undefined") return;
 
     if (error instanceof MicroApiError) {
       const message =
