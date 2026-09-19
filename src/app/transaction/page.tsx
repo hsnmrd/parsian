@@ -16,7 +16,7 @@ export default async function TransactionPage({ searchParams }: PageProps) {
   await queryClient.query(transactionsApi.list.toQuery(parsedParams));
 
   return (
-    <main className="container mx-auto py-6">
+    <main className="container mx-auto px-4 py-6 md:px-0">
       <HydrationBoundary state={dehydrate(queryClient)}>
         <TransactionsView />
       </HydrationBoundary>

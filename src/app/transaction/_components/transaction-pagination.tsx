@@ -2,6 +2,7 @@
 
 import { useQueryStates } from "nuqs";
 import { transactionSearchParamsParsers } from "../_params/transaction-search-params";
+import { getDesktopPaginationPages, getMobilePaginationPages } from "../_utils/pagination-pages";
 import {
   Pagination,
   PaginationContent,
@@ -14,33 +15,10 @@ import {
 
 interface TransactionPaginationProps {
   totalPages: number;
+  variant: "mobile" | "desktop";
 }
 
-function getPaginationPages(currentPage: number, totalPages: number): (number | "ellipsis")[] {
-  if (totalPages <= 7) {
-    return Array.from({ length: totalPages }, (_, i) => i + 1);
-  }
-
-  if (currentPage <= 4) {
-    return [1, 2, 3, 4, 5, "ellipsis", totalPages];
-  }
-
-  if (currentPage >= totalPages - 3) {
-    return [
-      1,
-      "ellipsis",
-      totalPages - 4,
-      totalPages - 3,
-      totalPages - 2,
-      totalPages - 1,
-      totalPages,
-    ];
-  }
-
-  return [1, "ellipsis", currentPage - 1, currentPage, currentPage + 1, "ellipsis", totalPages];
-}
-
-export function TransactionPagination({ totalPages }: TransactionPaginationProps) {
+export function TransactionPagination({ totalPages, variant }: TransactionPaginationProps) {
   const [{ page }, setFilters] = useQueryStates(transactionSearchParamsParsers);
 
   const currentPage = Math.min(Math.max(1, page), Math.max(1, totalPages));
@@ -50,24 +28,37 @@ export function TransactionPagination({ totalPages }: TransactionPaginationProps
     setFilters({ page: newPage });
   };
 
-  const pages = getPaginationPages(currentPage, totalPages);
+  const isMobile = variant === "mobile";
+  const pages = isMobile
+    ? getMobilePaginationPages(currentPage, totalPages)
+    : getDesktopPaginationPages(currentPage, totalPages);
 
   return (
     <div
-      className="flex min-h-17 flex-col items-center justify-between gap-4 border-t px-5 py-4 sm:flex-row"
+      className={
+        isMobile
+          ? "bg-card flex min-h-16 items-center justify-center gap-4 rounded-lg border px-2 py-2 shadow-xs"
+          : "flex min-h-17 items-center justify-between gap-4 border-t px-5 py-4"
+      }
       dir="rtl"
     >
-      <div className="text-muted-foreground text-xs">
-        صفحه {currentPage.toLocaleString("fa-IR")} از {totalPages.toLocaleString("fa-IR")}
-      </div>
+      {!isMobile && (
+        <div className="text-muted-foreground text-xs">
+          صفحه {currentPage} از {totalPages}
+        </div>
+      )}
 
-      <Pagination className="mx-0 w-auto justify-end" aria-label="صفحه‌بندی تراکنش‌ها">
+      <Pagination
+        className={`mx-0 w-auto ${isMobile ? "justify-center" : "justify-end"}`}
+        aria-label="صفحه‌بندی تراکنش‌ها"
+      >
         <PaginationContent>
           <PaginationItem>
             <PaginationPrevious
               text=""
               size="icon"
               variant="outline"
+              className={isMobile ? "size-11" : undefined}
               aria-label="صفحه قبل"
               disabled={currentPage <= 1}
               onClick={(e) => {
@@ -80,20 +71,22 @@ export function TransactionPagination({ totalPages }: TransactionPaginationProps
           {pages.map((p, idx) =>
             p === "ellipsis" ? (
               <PaginationItem key={`ellipsis-${idx}`}>
-                <PaginationEllipsis className="size-9" />
+                <PaginationEllipsis className={isMobile ? "size-11" : "size-9"} />
               </PaginationItem>
             ) : (
               <PaginationItem key={p}>
                 <PaginationLink
                   isActive={p === currentPage}
                   variant={p === currentPage ? "default" : "outline"}
-                  aria-label={`صفحه ${p.toLocaleString("fa-IR")}`}
+                  size="icon"
+                  className={isMobile ? "size-11" : undefined}
+                  aria-label={`صفحه ${p}`}
                   onClick={(e) => {
                     e.preventDefault();
                     handlePageChange(p);
                   }}
                 >
-                  {p.toLocaleString("fa-IR")}
+                  {p}
                 </PaginationLink>
               </PaginationItem>
             )
@@ -104,6 +97,7 @@ export function TransactionPagination({ totalPages }: TransactionPaginationProps
               text=""
               size="icon"
               variant="outline"
+              className={isMobile ? "size-11" : undefined}
               aria-label="صفحه بعد"
               disabled={currentPage >= totalPages}
               onClick={(e) => {

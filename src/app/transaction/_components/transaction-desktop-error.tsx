@@ -3,12 +3,12 @@ import { Button } from "@/components/ui/button";
 import { TableCell, TableRow } from "@/components/ui/table";
 import { AlertCircleIcon, RotateCcwIcon } from "lucide-react";
 
-interface TransactionTableErrorProps {
+interface TransactionDesktopErrorProps {
   error?: Error | null;
   onRetry?: () => void;
 }
 
-export function TransactionTableError({ error, onRetry }: TransactionTableErrorProps) {
+export function TransactionDesktopError({ error, onRetry }: TransactionDesktopErrorProps) {
   return (
     <TableRow>
       <TableCell colSpan={6} className="h-44 p-6">

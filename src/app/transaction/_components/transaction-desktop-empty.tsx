@@ -8,13 +8,13 @@ import {
 import { TableCell, TableRow } from "@/components/ui/table";
 import { SearchXIcon } from "lucide-react";
 
-interface TransactionTableEmptyProps {
+interface TransactionDesktopEmptyProps {
   message?: string;
 }
 
-export function TransactionTableEmpty({
+export function TransactionDesktopEmpty({
   message = "تراکنشی برای نمایش یافت نشد.",
-}: TransactionTableEmptyProps) {
+}: TransactionDesktopEmptyProps) {
   return (
     <TableRow>
       <TableCell colSpan={6} className="h-44 text-center">
