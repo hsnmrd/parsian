@@ -10,8 +10,8 @@ import {
 } from "@/components/ui/card";
 import { Separator } from "@/components/ui/separator";
 import { formatCardNumber, formatDateTime } from "@/lib/formatters";
-import type { Transaction } from "../_types/transaction";
-import { STATUS_CONFIG } from "../_utils/status-config";
+import type { Transaction } from "../../_types/transaction";
+import { STATUS_CONFIG } from "../../_utils/status-config";
 
 interface TransactionMobileCardProps {
   transaction: Transaction;

@@ -9,12 +9,12 @@ import {
   TableRow,
 } from "@/components/ui/table";
 import { formatCardNumber, formatDateTime } from "@/lib/formatters";
-import type { Transaction } from "../_types/transaction";
-import { STATUS_CONFIG } from "../_utils/status-config";
+import type { Transaction } from "../../_types/transaction";
+import { STATUS_CONFIG } from "../../_utils/status-config";
 import { TransactionDesktopEmpty } from "./transaction-desktop-empty";
 import { TransactionDesktopError } from "./transaction-desktop-error";
-import { TransactionPagination } from "./transaction-pagination";
-import { TransactionResultsSkeleton } from "./transaction-results-skeleton";
+import { TransactionPagination } from "../shared/transaction-pagination";
+import { TransactionResultsSkeleton } from "../shared/transaction-results-skeleton";
 
 interface TransactionDesktopResultsProps {
   transactions?: Transaction[];
@@ -99,8 +99,8 @@ export function TransactionDesktopResults({
                   </TableCell>
                   <TableCell className="px-5 font-semibold">{transaction.customerName}</TableCell>
                   <TableCell
-                    className="text-muted-foreground px-5 text-sm tracking-wide tabular-nums"
-                    dir="rtl"
+                    className="text-muted-foreground px-5 text-end text-sm tracking-wide tabular-nums"
+                    dir="ltr"
                   >
                     {formatCardNumber(transaction.cardNumber)}
                   </TableCell>

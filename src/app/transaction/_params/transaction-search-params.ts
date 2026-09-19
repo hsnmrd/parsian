@@ -1,8 +1,9 @@
 import {
+  createLoader,
+  createSearchParamsCache,
   parseAsInteger,
   parseAsString,
   parseAsStringLiteral,
-  createSearchParamsCache,
 } from "nuqs/server";
 
 export const transactionSearchParamsParsers = {
@@ -17,3 +18,5 @@ export const transactionSearchParamsParsers = {
 };
 
 export const transactionSearchParamsCache = createSearchParamsCache(transactionSearchParamsParsers);
+
+export const loadTransactionSearchParams = createLoader(transactionSearchParamsParsers);

@@ -28,6 +28,7 @@ This block is written and re-added by `next dev` — verify at `node_modules/nex
 
 ## Component organization
 
+- Define each route-specific or feature React component in its own file; do not declare secondary component functions inside another feature component's file. Generated shared UI primitives may retain their upstream file structure.
 - Keep React components focused on declarative rendering, composition, event wiring, and local UI state.
 - Move non-trivial pure logic—such as formatting, data transformation, pagination or range generation, query-parameter normalization, reusable mappings, and shared constants—out of component files.
 - Place transaction-specific helpers in `src/app/transaction/_utils`, application-wide helpers in `src/lib`, and reusable React hooks in `src/hooks`.
