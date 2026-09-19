@@ -18,20 +18,21 @@ export function serializeTransactionDate(date?: Date): string {
   return date ? format(date, "yyyy-MM-dd") : "";
 }
 
+const persianDateRangeFormatter = new Intl.DateTimeFormat("fa-IR-u-ca-persian", {
+  year: "numeric",
+  month: "2-digit",
+  day: "2-digit",
+});
+
 export function formatTransactionDateRange(from: string, to: string): string {
   const range = parseTransactionDateRange(from, to);
-  const formatter = new Intl.DateTimeFormat("fa-IR-u-ca-persian", {
-    year: "numeric",
-    month: "2-digit",
-    day: "2-digit",
-  });
 
   if (range?.from && range.to) {
-    return `${formatter.format(range.from)} تا ${formatter.format(range.to)}`;
+    return `${persianDateRangeFormatter.format(range.from)} تا ${persianDateRangeFormatter.format(range.to)}`;
   }
 
   if (range?.from) {
-    return `از ${formatter.format(range.from)}`;
+    return `از ${persianDateRangeFormatter.format(range.from)}`;
   }
 
   return "انتخاب بازه زمانی";

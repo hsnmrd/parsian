@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { CalendarDaysIcon } from "lucide-react";
 import type { DateRange } from "react-day-picker";
 import { Button } from "@/components/ui/button";
@@ -19,6 +19,7 @@ import {
   serializeTransactionDate,
 } from "../../../_utils/transaction-date-range";
 import { TransactionDateRangeCalendar } from "./transaction-filter-date-range-calendar";
+import { TransactionFilterDateRangeCalendarSkeleton } from "./transaction-filter-date-range-calendar-skeleton";
 
 interface TransactionFilterDatePickerProps {
   value?: DateRange;
@@ -34,8 +35,18 @@ export function TransactionFilterDatePicker({
   triggerLabel,
 }: TransactionFilterDatePickerProps) {
   const [isOpen, setIsOpen] = useState(false);
+  const [isCalendarMounted, setIsCalendarMounted] = useState(false);
   const [draftRange, setDraftRange] = useState<DateRange | undefined>(value);
   const isDesktop = useMediaQuery("(min-width: 1024px)");
+
+  useEffect(() => {
+    if (isOpen && !isCalendarMounted) {
+      const handle = requestAnimationFrame(() => {
+        setIsCalendarMounted(true);
+      });
+      return () => cancelAnimationFrame(handle);
+    }
+  }, [isOpen, isCalendarMounted]);
 
   const displayLabel =
     triggerLabel ??
@@ -47,6 +58,7 @@ export function TransactionFilterDatePicker({
   function handleOpenChange(open: boolean) {
     if (open) {
       setDraftRange(value);
+      setIsCalendarMounted(false);
     }
     setIsOpen(open);
   }
@@ -63,6 +75,12 @@ export function TransactionFilterDatePicker({
     </>
   );
 
+  const calendarContent = isCalendarMounted ? (
+    <TransactionDateRangeCalendar value={draftRange} onChange={setDraftRange} />
+  ) : (
+    <TransactionFilterDateRangeCalendarSkeleton />
+  );
+
   if (isDesktop === false) {
     return (
       <Drawer open={isOpen} onOpenChange={handleOpenChange} showSwipeHandle>
@@ -75,9 +93,7 @@ export function TransactionFilterDatePicker({
           <DrawerHeader className="border-b pb-4">
             <DrawerTitle>انتخاب بازه زمانی</DrawerTitle>
           </DrawerHeader>
-          <div className="flex justify-center p-3">
-            <TransactionDateRangeCalendar value={draftRange} onChange={setDraftRange} />
-          </div>
+          <div className="flex justify-center p-3">{calendarContent}</div>
           <DrawerFooter className="flex-row items-center justify-between gap-2 border-t pt-4">
             <Button
               type="button"
@@ -104,7 +120,7 @@ export function TransactionFilterDatePicker({
         {triggerContent}
       </PopoverTrigger>
       <PopoverContent align="start" className="w-auto gap-3 p-3">
-        <TransactionDateRangeCalendar value={draftRange} onChange={setDraftRange} />
+        {calendarContent}
         <div className="flex items-center justify-between gap-2">
           <Button type="button" variant="ghost" onClick={() => setDraftRange(undefined)}>
             پاک کردن
