@@ -1,5 +1,5 @@
 import { Button } from "@/components/ui/button";
-import { DialogFooter } from "@/components/ui/dialog";
+import { DrawerFooter } from "@/components/ui/drawer";
 
 interface TransactionFilterMobileFooterProps {
   onClear: () => void;
@@ -11,13 +11,13 @@ export function TransactionFilterMobileFooter({
   onApply,
 }: TransactionFilterMobileFooterProps) {
   return (
-    <DialogFooter className="grid grid-cols-2 p-4">
+    <DrawerFooter className="grid grid-cols-2 gap-3 p-4">
       <Button type="button" variant="outline" className="h-11" onClick={onClear}>
         پاک کردن فیلترها
       </Button>
       <Button type="button" className="h-11" onClick={onApply}>
         اعمال فیلترها
       </Button>
-    </DialogFooter>
+    </DrawerFooter>
   );
 }

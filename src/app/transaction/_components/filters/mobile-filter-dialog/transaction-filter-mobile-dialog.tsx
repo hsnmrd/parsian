@@ -3,7 +3,7 @@
 import { useState } from "react";
 import type { DateRange } from "react-day-picker";
 import { useQueryStates } from "nuqs";
-import { Dialog, DialogContent } from "@/components/ui/dialog";
+import { Drawer, DrawerContent } from "@/components/ui/drawer";
 import { FieldGroup } from "@/components/ui/field";
 import { Separator } from "@/components/ui/separator";
 import { transactionSearchParamsParsers } from "../../../_params/transaction-search-params";
@@ -52,12 +52,9 @@ export function TransactionMobileFilterDialog() {
   }
 
   return (
-    <Dialog open={isOpen} onOpenChange={handleOpenChange}>
+    <Drawer open={isOpen} onOpenChange={handleOpenChange} showSwipeHandle>
       <TransactionFilterMobileTrigger />
-      <DialogContent
-        className="inset-4 flex h-auto w-auto max-w-none translate-x-0 translate-y-0 flex-col gap-0 rounded-2xl p-0 sm:max-w-none rtl:translate-x-0"
-        showCloseButton={false}
-      >
+      <DrawerContent className="rounded-t-2xl">
         <TransactionFilterMobileHeader />
         <Separator />
         <FieldGroup className="flex-1 gap-5 p-4">
@@ -66,7 +63,7 @@ export function TransactionMobileFilterDialog() {
         </FieldGroup>
         <Separator />
         <TransactionFilterMobileFooter onClear={clearFilters} onApply={applyFilters} />
-      </DialogContent>
-    </Dialog>
+      </DrawerContent>
+    </Drawer>
   );
 }

@@ -1,11 +1,11 @@
 import { XIcon } from "lucide-react";
 import { Button } from "@/components/ui/button";
-import { DialogClose, DialogHeader, DialogTitle } from "@/components/ui/dialog";
+import { DrawerClose, DrawerHeader, DrawerTitle } from "@/components/ui/drawer";
 
 export function TransactionFilterMobileHeader() {
   return (
-    <DialogHeader className="min-h-14 justify-center px-14 py-3 text-center">
-      <DialogClose
+    <DrawerHeader className="min-h-14 justify-center px-14 py-3 text-center">
+      <DrawerClose
         render={
           <Button
             type="button"
@@ -17,8 +17,8 @@ export function TransactionFilterMobileHeader() {
         }
       >
         <XIcon aria-hidden="true" />
-      </DialogClose>
-      <DialogTitle>فیلترها</DialogTitle>
-    </DialogHeader>
+      </DrawerClose>
+      <DrawerTitle>فیلترها</DrawerTitle>
+    </DrawerHeader>
   );
 }

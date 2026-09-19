@@ -18,7 +18,7 @@ export function TransactionDateRangeCalendar({
       defaultMonth={value?.from}
       numberOfMonths={1}
       disabled={{ after: new Date() }}
-      className="mx-auto"
+      className="mx-auto bg-transparent"
     />
   );
 }

@@ -1,12 +1,12 @@
 import { FilterIcon } from "lucide-react";
 import { Button } from "@/components/ui/button";
-import { DialogTrigger } from "@/components/ui/dialog";
+import { DrawerTrigger } from "@/components/ui/drawer";
 
 const MOBILE_FILTER_FIELD_COUNT = 2;
 
 export function TransactionFilterMobileTrigger() {
   return (
-    <DialogTrigger
+    <DrawerTrigger
       render={
         <Button
           type="button"
@@ -24,6 +24,6 @@ export function TransactionFilterMobileTrigger() {
       >
         {MOBILE_FILTER_FIELD_COUNT.toLocaleString("fa-IR")}
       </span>
-    </DialogTrigger>
+    </DrawerTrigger>
   );
 }
