@@ -1,10 +1,17 @@
+"use client";
+
 import { FilterIcon } from "lucide-react";
+import { useQueryStates } from "nuqs";
 import { Button } from "@/components/ui/button";
 import { DrawerTrigger } from "@/components/ui/drawer";
-
-const MOBILE_FILTER_FIELD_COUNT = 2;
+import { transactionSearchParamsParsers } from "../../../_params/transaction-search-params";
+import { countSelectedFilters } from "../../../_utils/transaction-active-filters";
 
 export function TransactionFilterMobileTrigger() {
+  const [filters] = useQueryStates(transactionSearchParamsParsers);
+  const activeCount = countSelectedFilters(filters);
+  const hasActiveFilters = activeCount > 0;
+
   return (
     <DrawerTrigger
       render={
@@ -13,17 +20,23 @@ export function TransactionFilterMobileTrigger() {
           variant="outline"
           size="icon-lg"
           className="relative size-12 lg:hidden"
-          aria-label="باز کردن فیلترها"
+          aria-label={
+            hasActiveFilters
+              ? `باز کردن فیلترها (${activeCount.toLocaleString("fa-IR")} فیلتر انتخاب شده)`
+              : "باز کردن فیلترها"
+          }
         />
       }
     >
       <FilterIcon aria-hidden="true" />
-      <span
-        aria-hidden="true"
-        className="bg-primary text-primary-foreground absolute -start-1 -top-1 flex size-5 items-center justify-center rounded-full text-[10px] tabular-nums"
-      >
-        {MOBILE_FILTER_FIELD_COUNT.toLocaleString("fa-IR")}
-      </span>
+      {hasActiveFilters && (
+        <span
+          aria-hidden="true"
+          className="bg-primary text-primary-foreground absolute -start-1 -top-1 flex size-5 items-center justify-center rounded-full text-[10px] tabular-nums"
+        >
+          {activeCount.toLocaleString("fa-IR")}
+        </span>
+      )}
     </DrawerTrigger>
   );
 }
