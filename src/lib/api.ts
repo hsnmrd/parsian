@@ -1,5 +1,6 @@
 import { createMicroApi, MicroApiError } from "micro-rq";
 import { toast } from "sonner";
+import { getUserFacingErrorMessage } from "@/lib/error-messages";
 
 const baseUrl = process.env.NEXT_PUBLIC_API_BASE_URL;
 
@@ -15,20 +16,14 @@ export const api = createMicroApi({
     if (typeof window === "undefined") return;
 
     if (error instanceof MicroApiError) {
-      const message =
-        (error.data as { error?: string })?.error ||
-        error.statusText ||
-        `کد وضعیت: ${error.status}`;
-
       toast.error("خطا در ارتباط با سرور", {
-        description: message,
+        description: getUserFacingErrorMessage(error),
       });
       return;
     }
 
-    const message = error instanceof Error ? error.message : "خطای ناشناخته رخ داده است";
     toast.error("خطا در پردازش درخواست", {
-      description: message,
+      description: getUserFacingErrorMessage(error),
     });
   },
 });

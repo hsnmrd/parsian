@@ -1,6 +1,7 @@
 import { AlertCircleIcon, RotateCcwIcon } from "lucide-react";
 import { Alert, AlertAction, AlertDescription, AlertTitle } from "@/components/ui/alert";
 import { Button } from "@/components/ui/button";
+import { getUserFacingErrorMessage } from "@/lib/error-messages";
 import { cn } from "@/lib/utils";
 
 interface TransactionErrorStateProps {
@@ -15,7 +16,7 @@ export function TransactionErrorState({ error, onRetry, className }: Transaction
       <AlertCircleIcon />
       <AlertTitle className="font-semibold">خطا در دریافت اطلاعات تراکنش‌ها</AlertTitle>
       <AlertDescription className="text-xs sm:text-sm">
-        {error instanceof Error ? error.message : "خطای غیرمنتظره در برقراری ارتباط با سرور"}
+        {getUserFacingErrorMessage(error)}
       </AlertDescription>
       {onRetry && (
         <AlertAction className="end-3 top-1/2 -translate-y-1/2">
