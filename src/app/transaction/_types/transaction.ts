@@ -16,10 +16,10 @@ export const transactionSchema = z.object({
 export type Transaction = z.infer<typeof transactionSchema>;
 
 export const transactionFilterSchema = z.object({
-  page: z.coerce.number().int().min(1).default(1),
-  pageSize: z.coerce.number().int().min(1).max(100).default(10),
+  page: z.coerce.number().int().min(1).catch(1),
+  pageSize: z.coerce.number().int().min(1).max(100).catch(10),
   search: z.string().optional().default(""),
-  status: z.enum(["ALL", "Successful", "Failed", "Pending"]).optional().default("ALL"),
+  status: z.enum(["ALL", "Successful", "Failed", "Pending"]).catch("ALL"),
   from: z.string().optional().default(""),
   to: z.string().optional().default(""),
 });

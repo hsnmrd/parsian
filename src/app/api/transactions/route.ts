@@ -79,9 +79,9 @@ export async function GET(request: NextRequest) {
 
     // 5. Pagination & totalCount
     const totalCount = filtered.length;
-    const page = Math.max(1, params.page || 1);
-    const pageSize = Math.max(1, Math.min(100, params.pageSize || 10));
+    const pageSize = params.pageSize;
     const totalPages = Math.ceil(totalCount / pageSize);
+    const page = Math.min(params.page, Math.max(1, totalPages));
 
     const start = (page - 1) * pageSize;
     const data = filtered.slice(start, start + pageSize);

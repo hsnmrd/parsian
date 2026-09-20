@@ -7,6 +7,7 @@ import { useQuery } from "@tanstack/react-query";
 import { useMediaQuery } from "@/hooks/use-media-query";
 import { transactionsApi } from "../_api/transactions-api";
 import { loadTransactionSearchParams } from "../_params/transaction-search-params";
+import { transactionFilterSchema } from "../_types/transaction";
 import { TransactionFilters } from "./filters/transaction-filters";
 import { TransactionResultsSkeleton } from "./results/shared/transaction-results-skeleton";
 
@@ -37,7 +38,10 @@ const TransactionMobileResults = dynamic(
 export function TransactionsView() {
   const searchParams = useSearchParams();
   const queryString = searchParams.toString();
-  const filters = useMemo(() => loadTransactionSearchParams(queryString), [queryString]);
+  const filters = useMemo(() => {
+    const urlParams = loadTransactionSearchParams(queryString);
+    return transactionFilterSchema.parse(urlParams);
+  }, [queryString]);
   const isDesktop = useMediaQuery(DESKTOP_MEDIA_QUERY);
 
   const { data, isPending, isFetching, isError, error, refetch } = useQuery(
