@@ -1,8 +1,7 @@
-import { dehydrate, HydrationBoundary, QueryClient } from "@tanstack/react-query";
-import { transactionsApi } from "./_api/transactions-api";
-import { transactionSearchParamsCache } from "./_params/transaction-search-params";
+import { Suspense } from "react";
+import { TransactionResultsData } from "./_components/transaction-results-data";
 import { TransactionsView } from "./_components/transactions-view";
-import { transactionFilterSchema } from "./_types/transaction";
+import { TransactionResultsSkeleton } from "./_components/results/shared/transaction-results-skeleton";
 
 interface PageProps {
   searchParams: Promise<{ [key: string]: string | string[] | undefined }>;
@@ -10,18 +9,14 @@ interface PageProps {
 
 export const dynamic = "force-dynamic";
 
-export default async function TransactionPage({ searchParams }: PageProps) {
-  const urlParams = await transactionSearchParamsCache.parse(searchParams);
-  const parsedParams = transactionFilterSchema.parse(urlParams);
-
-  const queryClient = new QueryClient();
-  await queryClient.query(transactionsApi.list.toQuery(parsedParams));
-
+export default function TransactionPage({ searchParams }: PageProps) {
   return (
     <main className="mx-auto w-full max-w-[1440px] px-4 py-6 md:px-10">
-      <HydrationBoundary state={dehydrate(queryClient)}>
-        <TransactionsView />
-      </HydrationBoundary>
+      <TransactionsView>
+        <Suspense fallback={<TransactionResultsSkeleton />}>
+          <TransactionResultsData searchParams={searchParams} />
+        </Suspense>
+      </TransactionsView>
     </main>
   );
 }

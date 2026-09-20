@@ -1,4 +1,12 @@
+"use client";
+
+import { useMemo } from "react";
+import { useSearchParams } from "next/navigation";
+import { useQuery } from "@tanstack/react-query";
 import { FieldGroup } from "@/components/ui/field";
+import { transactionsApi } from "../../_api/transactions-api";
+import { loadTransactionSearchParams } from "../../_params/transaction-search-params";
+import { transactionFilterSchema } from "../../_types/transaction";
 import { TransactionFilterDesktopClearButton } from "./desktop/transaction-filter-desktop-clear-button";
 import { TransactionFilterDesktopDateField } from "./desktop/transaction-filter-desktop-date-field";
 import { TransactionFilterMobileDialog } from "./mobile/transaction-filter-mobile-dialog";
@@ -6,12 +14,18 @@ import { TransactionSearchFilter } from "./shared/transaction-filter-search";
 import { TransactionStatusFilter } from "./shared/transaction-filter-status";
 import { TransactionFilterSummary } from "./shared/transaction-filter-summary";
 
-interface TransactionFiltersProps {
-  totalCount?: number;
-  visibleCount?: number;
-}
+export function TransactionFilters() {
+  const searchParams = useSearchParams();
+  const queryString = searchParams.toString();
+  const filters = useMemo(() => {
+    const urlParams = loadTransactionSearchParams(queryString);
+    return transactionFilterSchema.parse(urlParams);
+  }, [queryString]);
+  const { data } = useQuery({
+    ...transactionsApi.list.toQuery(filters),
+    enabled: false,
+  });
 
-export function TransactionFilters({ totalCount, visibleCount }: TransactionFiltersProps) {
   return (
     <section
       aria-label="فیلتر تراکنش‌ها"
@@ -28,7 +42,10 @@ export function TransactionFilters({ totalCount, visibleCount }: TransactionFilt
         </div>
       </FieldGroup>
 
-      <TransactionFilterSummary totalCount={totalCount} visibleCount={visibleCount} />
+      <TransactionFilterSummary
+        totalCount={data?.pagination.totalCount}
+        visibleCount={data?.data.length}
+      />
     </section>
   );
 }
