@@ -1,0 +1,4 @@
+interface:
+  display_name: "Code Review"
+  short_description: "Review task changes before completion"
+  default_prompt: "Use $code-review to review the current task changes against the repository rules."
