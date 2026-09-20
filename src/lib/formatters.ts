@@ -1,6 +1,6 @@
 export function formatCardNumber(card: string): string {
   if (card.length === 16) {
-    return `${card.slice(0, 4)} •••• •••• ${card.slice(12)}`;
+    return `${card.slice(0, 4)} ${card.slice(4, 8)} ${card.slice(8, 12)} ${card.slice(12)}`;
   }
   return card;
 }
