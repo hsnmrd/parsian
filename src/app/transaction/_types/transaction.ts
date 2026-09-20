@@ -1,4 +1,5 @@
 import { z } from "zod";
+import { normalizeDigits } from "../_utils/normalize-digits";
 
 export const transactionStatusSchema = z.enum(["Successful", "Failed", "Pending"]);
 
@@ -18,7 +19,7 @@ export type Transaction = z.infer<typeof transactionSchema>;
 export const transactionFilterSchema = z.object({
   page: z.coerce.number().int().min(1).catch(1),
   pageSize: z.coerce.number().int().min(1).max(100).catch(10),
-  search: z.string().optional().default(""),
+  search: z.string().optional().default("").transform(normalizeDigits),
   status: z.enum(["ALL", "Successful", "Failed", "Pending"]).catch("ALL"),
   from: z.string().optional().default(""),
   to: z.string().optional().default(""),
